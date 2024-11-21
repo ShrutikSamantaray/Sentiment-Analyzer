@@ -27,7 +27,7 @@ def display_response(response):
 
 # Streamlit app
 
-st.set_page_config(page_title="Product Classification", page_icon="https://avkalan.ai/wp-content/uploads/2023/11/cropped-Avkalan-logo-new-1.png")
+st.set_page_config(page_title="Product Classification", page_icon="https://i2.wp.com/e7.pngegg.com/pngimages/357/433/png-clipart-computer-icons-website-web-design-logo.png")
 
 
 
