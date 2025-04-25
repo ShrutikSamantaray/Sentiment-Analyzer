@@ -3,7 +3,7 @@ import google.generativeai as genai
 from textblob import TextBlob
 
 # Configure the GenAI API key
-GOOGLE_API_KEY = "AIzaSyDU9viU1R3P1sDXO-xYznFMgPlEt7bp53Q"
+GOOGLE_API_KEY = "AIzaSyDNl9ZSrrpsstz-RRXRHp9zvYDgMcxQxVU"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Create a GenerativeModel instance
