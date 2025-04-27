@@ -7,7 +7,7 @@ GOOGLE_API_KEY = "AIzaSyDH9gLBf87kjFEginAWIykGOkkBRBipU-I"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Create a GenerativeModel instance
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('text-bison')
 
 def perform_sentiment_analysis(text):
     blob = TextBlob(text)
