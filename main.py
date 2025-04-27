@@ -1,13 +1,9 @@
 import streamlit as st
-import google.generativeai as genai
+import openai
 from textblob import TextBlob
 
-# Configure the GenAI API key
-GOOGLE_API_KEY = "AIzaSyDH9gLBf87kjFEginAWIykGOkkBRBipU-I"
-genai.configure(api_key=GOOGLE_API_KEY)
-
-# Create a GenerativeModel instance
-model = genai.GenerativeModel('text-bison')
+# Set your OpenAI API key
+openai.api_key = "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"
 
 def perform_sentiment_analysis(text):
     blob = TextBlob(text)
@@ -19,60 +15,32 @@ def perform_sentiment_analysis(text):
     else:
         return "Neutral"
 
-# Function to display the response with improved styling
 def display_response(response):
-    st.markdown(f"**Sentiment:** {senti}",unsafe_allow_html=True)
-    st.markdown(f" {response}",unsafe_allow_html=True)
-    #st.info(f"### {response}")
+    st.markdown(f"**Sentiment:** {senti}", unsafe_allow_html=True)
+    st.markdown(f"{response}", unsafe_allow_html=True)
 
-# Streamlit app
-
-st.set_page_config(page_title="Product Classification", page_icon="https://i2.wp.com/e7.pngegg.com/pngimages/357/433/png-clipart-computer-icons-website-web-design-logo.png")
-
-
-
-
-
-page_bg_img = """
-<style>
-
-
-
-[data-testid="stAppViewContainer"] {
-background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcwHTGllKkwiTOpzwX-TcSyDW4AZj67t3i1VbJ5aGIMX12vUcjSJ0eraLuJsMDMkw-PfL6A6RRpcxX-O2Z3-mOFo3Y9XvPP8KlJqinKEgjSMfV7Gnk5YANpnT2FZe4VYPNAWqjUaHc8_at/w640-h360-rw/black-wallpaper-pc-heroscreen.cc-4k.png");
-background-size: cover;
-background-repeat: no-repeat;
-
-}
-
-
-</style>
-"""
-
-st.markdown(page_bg_img, unsafe_allow_html=True)
+st.set_page_config(page_title="Product Classification")
 
 st.title("Sentiment Analysis")
 st.markdown("---")
 
-# User input
-categories="[Package, Delivery, Built Quality, Customer Service, Primary functionality]"
-prompt= '''You are given three tasks: 
-category = "[Home Appliance, Electronics, Clothing, Personal Care, Healthcare ]"
-1) Classify the given text into only and only these category: {category}. Just return one word single response per sentence from the category mentioned above
-2) Classify them into specific products. 
-Topic = "[Package, Delivery, Product Quality, Customer Service, Primary functionality]"
-3) Classify the following sentences into only and only these Topics: {Topic}. Just return one word single response per sentence from the Topic mentioned above
-Just return one-word answer in a new lines with its title for each task with no explanations.
-The text is :'''
-
 query = st.text_area("Enter your text here:")
 
-# Generate response
+prompt = f"""Classify the following text into product categories and topics: {query}
+Return only the category and topic."""
+
 if st.button("Generate Response"):
     if query:
         with st.spinner("Processing..."):
-            senti=perform_sentiment_analysis(query)
-            response = model.generate_content(prompt + query).text
-            display_response(response)
+            senti = perform_sentiment_analysis(query)
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant that classifies product-related texts."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            reply = response['choices'][0]['message']['content']
+            display_response(reply)
     else:
         st.warning("Please enter some text.")
