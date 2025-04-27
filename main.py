@@ -3,7 +3,7 @@ import google.generativeai as genai
 from textblob import TextBlob
 
 # Configure the GenAI API key
-GOOGLE_API_KEY = "AIzaSyDNl9ZSrrpsstz-RRXRHp9zvYDgMcxQxVU"
+GOOGLE_API_KEY = "AIzaSyDH9gLBf87kjFEginAWIykGOkkBRBipU-I"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Create a GenerativeModel instance
@@ -51,7 +51,7 @@ background-repeat: no-repeat;
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-st.title("Sentiment Analysis & Product Classification")
+st.title("Sentiment Analysis")
 st.markdown("---")
 
 # User input
